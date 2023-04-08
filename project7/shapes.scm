@@ -5,6 +5,17 @@
 (define (test op left right)
     (op left right))
 
+
+(define (append! lst . lsts)
+  (if (not (null? lsts))
+      (if (null? (cdr lst))
+          (begin
+            (set-cdr! lst (car lsts))
+            (apply append! (car lsts) (cdr lsts)))
+
+          (apply append! (cdr lst) lsts))))
+
+
 (define (sphere name_value radius_value)
         (define type "sphere")
         (define name name_value)

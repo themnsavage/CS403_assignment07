@@ -16,3 +16,11 @@
 
 (define is_valid(test eqv? (new_sphere 'get_volume) 12.57))
 (display is_valid)(newline)
+
+(define s1(list (sphere "globe1" 1)))
+(define s2(list (sphere "globe2" 2)))
+
+
+(append! s1 s2)
+
+(display s1)
