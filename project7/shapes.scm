@@ -9,8 +9,8 @@
         (define pi 3.14159265358979323846)
         (define area (round-off (* 4 pi (* radius radius)) 2))
         (define volume (round-off (* (/ 4 3) pi (* radius radius radius)) 2))
-        (define info (string-append "Sphere: " name ", Radius=" (number->string radius) "\n     " 
-        "Surface Area: " (number->string area) " Volume: " (number->string volume) "\n"))
+        (define info (string-append "Sphere: " name ", Radius=" (number->string radius) 
+        "\n     " "Surface Area: " (number->string area) " Volume: " (number->string volume) "\n"))
         (lambda (selector)
                 (cond ((eqv? selector 'get_radius) radius)
                       ((eqv? selector 'get_type) type)
