@@ -6,3 +6,7 @@
 
 (define volume(new_sphere 'get_volume))
 (display "volume: ")(display volume)(newline)
+
+(define info(new_sphere 'get_info))
+
+(display info)
