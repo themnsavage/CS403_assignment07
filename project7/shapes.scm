@@ -35,5 +35,11 @@
                       (else '()))))
 
 (define (perform . params)
-    (display params)(newline)
+    (define command(first params))
+    (display "command: ")(display command)(newline)
+    (define file_name(second params))
+    (display "file name: ")(display file_name)(newline)
+    (define test_conditions(cdr  (cdr params)))
+    (display "test_conditions: ")(display test_conditions)(newline)
+
 )
