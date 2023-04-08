@@ -15,7 +15,6 @@
 
           (apply append! (cdr lst) lsts))))
 
-
 (define (sphere name_value radius_value)
         (define type "sphere")
         (define name name_value)
@@ -34,12 +33,22 @@
                       ((eqv? selector 'get_info) info)
                       (else '()))))
 
+(define (is_valid_test_conditions test_conditions)
+    (define r (modulo (length test_conditions) 3))
+    (cond
+        ((eqv? r 0) #t)
+        (else #f)
+    )
+)
+
 (define (perform . params)
     (define command(first params))
-    (display "command: ")(display command)(newline)
     (define file_name(second params))
-    (display "file name: ")(display file_name)(newline)
     (define test_conditions(cdr  (cdr params)))
-    (display "test_conditions: ")(display test_conditions)(newline)
-
+    (define valid_test_conditions(is_valid_test_conditions test_conditions))
+    (cond
+        ((eqv? valid_test_conditions #f)
+            (display "Incorrect number of arguments.")(newline)
+        )
+    )
 )
