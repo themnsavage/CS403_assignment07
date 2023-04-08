@@ -2,6 +2,9 @@
   (let ((power (expt 10 n)))
     (/ (round (* power z)) power)))
 
+(define (test op left right)
+    (op left right))
+
 (define (sphere name_value radius_value)
         (define type "sphere")
         (define name name_value)
