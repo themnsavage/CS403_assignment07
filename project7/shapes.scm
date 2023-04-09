@@ -41,7 +41,7 @@
     )
 )
 
-(define (read_file file_name)
+(define (is_file_valid file_name)
     (cond ((file-exists? file_name)
             #t
         )
@@ -56,7 +56,7 @@
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
-    (define valid_file(read_file file_name))
+    (define valid_file(is_file_valid file_name))
     (cond
         ((eqv? valid_file #f)
             (display "Unable to open ") (display file_name) (display " for reading.")(newline)
