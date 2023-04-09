@@ -41,14 +41,40 @@
     )
 )
 
+(define (read_file file_name)
+    (cond ((file-exists? file_name)
+            #t
+        )
+
+        (else 
+            #f
+        )
+    )
+)
+
+
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
+    (define valid_file(read_file file_name))
+    (cond
+        ((eqv? valid_file #f)
+            (display "Unable to open ") (display file_name) (display " for reading.")(newline)
+        )
+        (else
+            (display "reading file")(newline)
+        )
+    )
+    
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
+        ((and (eqv? valid_test_conditions #t) (eqv? valid_file #t))
+            (display "running test conditions")(newline)
+        )
         ((eqv? valid_test_conditions #f)
             (display "Incorrect number of arguments.")(newline)
         )
     )
+    
 )
