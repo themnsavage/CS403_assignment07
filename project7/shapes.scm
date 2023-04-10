@@ -52,6 +52,32 @@
     )
 )
 
+(define (str-split str ch)
+  (let ((len (string-length str)))
+    (letrec
+      ((split
+        (lambda (a b)
+          (cond
+            ((>= b len) (if (= a b) '() (cons (substring str a b) '())))
+              ((char=? ch (string-ref str b)) (if (= a b)
+                (split (+ 1 a) (+ 1 b))
+                  (cons (substring str a b) (split b b))))
+                (else (split a (+ 1 b)))))))
+                  (split 0 0))))
+
+(define (get_lines name)
+  (let ((port (open-input-file name)))
+        (define lines(get_lines_helper port '()))
+        (close-input-port port)
+    lines))
+
+(define (get_lines_helper port lines)
+  (let ((stuff (read-line port)))
+    (if (eof-object? stuff)
+	lines
+	(begin 
+	        (get_lines_helper port (append lines (str-split stuff #\space)))))))
+
 
 (define (perform . params)
     (define command(first params))
@@ -62,7 +88,7 @@
             (display "Unable to open ") (display file_name) (display " for reading.")(newline)
         )
         (else
-            (display "reading file")(newline)
+            (display "lines list: ")(display (get_lines file_name))(newline)
         )
     )
     
