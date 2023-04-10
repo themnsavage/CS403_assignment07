@@ -74,10 +74,34 @@
 (define (get_lines_helper port lines)
   (let ((stuff (read-line port)))
     (if (eof-object? stuff)
-	lines
-	(begin 
-	        (get_lines_helper port (append lines (str-split stuff #\space)))))))
+	    lines
+	    (begin 
+	            (get_lines_helper port (cons (str-split stuff #\space) lines ))
+      )
+    )        
+  )
+)
 
+(define(print_lines lines)
+  (cond
+    ((null? lines) 'done)
+    (else
+      (print_line (first lines))
+      (display "--------------")(newline)
+      (print_lines (cdr lines))
+    )
+  )
+)
+
+(define(print_line line)
+    (cond
+      ((null? line) 'done)
+      (else
+        (display  (first line))(newline)
+        (print_line (cdr line))
+      )
+  )
+)
 
 (define (perform . params)
     (define command(first params))
@@ -88,7 +112,7 @@
             (display "Unable to open ") (display file_name) (display " for reading.")(newline)
         )
         (else
-            (display "lines list: ")(display (get_lines file_name))(newline)
+            (print_lines (get_lines file_name))
         )
     )
     
