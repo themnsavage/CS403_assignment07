@@ -65,6 +65,19 @@
                 (else (split a (+ 1 b)))))))
                   (split 0 0))))
 
+(define (read_file file_name)
+  (define valid_file(is_file_valid file_name))
+  (cond
+      ((eqv? valid_file #f)
+          (display "Unable to open ") (display file_name) (display " for reading.")(newline)
+          #f
+      )
+      (else
+          (get_lines file_name)
+      )
+  )
+)
+
 (define (get_lines name)
   (let ((port (open-input-file name)))
         (define lines(get_lines_helper port '()))
@@ -106,20 +119,12 @@
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
-    (define valid_file(is_file_valid file_name))
-    (cond
-        ((eqv? valid_file #f)
-            (display "Unable to open ") (display file_name) (display " for reading.")(newline)
-        )
-        (else
-            (print_lines (get_lines file_name))
-        )
-    )
-    
+    (define lines (read_file file_name))
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
-        ((and (eqv? valid_test_conditions #t) (eqv? valid_file #t))
+        ((and (eqv? valid_test_conditions #t) (not (eqv? lines #f)))
+            (print_lines lines)
             (display "running test conditions")(newline)
         )
         ((eqv? valid_test_conditions #f)
