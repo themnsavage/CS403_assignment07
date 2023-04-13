@@ -186,7 +186,7 @@
 )
 
 (define (create_list_of_shapes lines list_of_shapes)
-  (cond ((null? lines) list_of_shapes)
+  (cond ((null? lines) (reverse list_of_shapes))
         (else
           (create_list_of_shapes (cdr lines) (append list_of_shapes (list(create_shape (first (first lines)) (second (first lines)) (cdr (cdr (first lines)))))))
         )
@@ -194,12 +194,22 @@
   
 )
 
+(define (print_command list_of_shapes)
+  (cond
+    ((null? list_of_shapes) 'done)
+    (else
+      (display ((car list_of_shapes) 'get_info))
+      (print_command (cdr list_of_shapes))
+    )
+  )
+)
+
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
     (define lines (read_file file_name))
     (define list_of_shapes(create_list_of_shapes lines '()))
-    (display "list: ")(display list_of_shapes)(newline)
+    (print_command list_of_shapes)
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
@@ -210,5 +220,6 @@
             (display "Incorrect number of arguments.")(newline)
         )
     )
+    (newline)
     
 )
