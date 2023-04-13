@@ -261,12 +261,58 @@
   (display "min(Volume)= ")(display min_volume)(newline)
 )
 
+(define (get_max_area list_of_shapes max_area)
+  (cond
+    ((null? list_of_shapes)
+      max_area
+    )
+    (else
+      (cond
+        ((or (null? max_area) (> ((car list_of_shapes) 'get_area) max_area))
+          (get_max_area (cdr list_of_shapes) ((car list_of_shapes) 'get_area))
+        )
+        (else
+          (get_max_area (cdr list_of_shapes) max_area)
+        )
+
+      )
+    )
+  )
+)
+
+(define (get_max_volume list_of_shapes max_volume)
+  (cond
+    ((null? list_of_shapes)
+      max_volume
+    )
+    (else
+      (cond
+        ((or (null? max_volume) (> ((car list_of_shapes) 'get_volume) max_volume))
+          (get_max_volume (cdr list_of_shapes) ((car list_of_shapes) 'get_volume))
+        )
+        (else
+          (get_max_volume (cdr list_of_shapes) max_volume)
+        )
+
+      )
+    )
+  )
+)
+
+(define (max_command list_of_shapes)
+  (define max_area(get_max_area list_of_shapes '()))
+  (define max_volume(get_max_volume list_of_shapes '()))
+
+  (display "max(Surface Area)= ")(display max_area)(newline)
+  (display "max(Volume)= ")(display max_volume)(newline)
+)
+
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
     (define lines (read_file file_name))
     (define list_of_shapes(create_list_of_shapes lines '()))
-    (min_command list_of_shapes)
+    (max_command list_of_shapes)
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
