@@ -204,12 +204,23 @@
   )
 )
 
+(define (count_command list_of_shapes count)
+    (cond
+      ((null? list_of_shapes) 
+        (display "There are ")(display count)(display " shapes.")(newline)
+      'done)
+      (else
+        (count_command (cdr list_of_shapes) (+ count 1))
+      )
+  )
+)
+
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
     (define lines (read_file file_name))
     (define list_of_shapes(create_list_of_shapes lines '()))
-    (print_command list_of_shapes)
+    (count_command list_of_shapes 0)
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
