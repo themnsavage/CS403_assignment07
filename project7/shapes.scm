@@ -307,12 +307,42 @@
   (display "max(Volume)= ")(display max_volume)(newline)
 )
 
+(define (get_total_area list_of_shapes total_area)
+  (cond
+    ((null? list_of_shapes)
+      total_area
+    )
+    (else
+      (get_total_area (cdr list_of_shapes) (+ total_area ((car list_of_shapes) 'get_area)))
+    )
+  )
+)
+
+(define (get_total_volume list_of_shapes total_volume)
+  (cond
+    ((null? list_of_shapes)
+      total_volume
+    )
+    (else
+      (get_total_volume (cdr list_of_shapes) (+ total_volume ((car list_of_shapes) 'get_volume)))
+    )
+  )
+)
+
+(define (total_command list_of_shapes)
+  (define total_area(round-off (get_total_area list_of_shapes 0) 2))
+  (define total_volume(round-off (get_total_volume list_of_shapes 0) 2))
+
+  (display "total(Surface Area)= ")(display total_area)(newline)
+  (display "total(Volume)= ")(display total_volume)(newline)
+)
+
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
     (define lines (read_file file_name))
     (define list_of_shapes(create_list_of_shapes lines '()))
-    (max_command list_of_shapes)
+    (total_command list_of_shapes)
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
