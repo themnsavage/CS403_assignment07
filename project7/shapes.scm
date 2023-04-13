@@ -215,12 +215,58 @@
   )
 )
 
+(define (get_min_area list_of_shapes min_area)
+  (cond
+    ((null? list_of_shapes)
+      min_area
+    )
+    (else
+      (cond
+        ((or (null? min_area) (< ((car list_of_shapes) 'get_area) min_area))
+          (get_min_area (cdr list_of_shapes) ((car list_of_shapes) 'get_area))
+        )
+        (else
+          (get_min_area (cdr list_of_shapes) min_area)
+        )
+
+      )
+    )
+  )
+)
+
+(define (get_min_volume list_of_shapes min_volume)
+  (cond
+    ((null? list_of_shapes)
+      min_volume
+    )
+    (else
+      (cond
+        ((or (null? min_volume) (< ((car list_of_shapes) 'get_volume) min_volume))
+          (get_min_volume (cdr list_of_shapes) ((car list_of_shapes) 'get_volume))
+        )
+        (else
+          (get_min_volume (cdr list_of_shapes) min_volume)
+        )
+
+      )
+    )
+  )
+)
+
+(define (min_command list_of_shapes)
+  (define min_area(get_min_area list_of_shapes '()))
+  (define min_volume(get_min_volume list_of_shapes '()))
+
+  (display "min(Surface Area)= ")(display min_area)(newline)
+  (display "min(Volume)= ")(display min_volume)(newline)
+)
+
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
     (define lines (read_file file_name))
     (define list_of_shapes(create_list_of_shapes lines '()))
-    (count_command list_of_shapes 0)
+    (min_command list_of_shapes)
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
