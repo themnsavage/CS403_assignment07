@@ -204,15 +204,20 @@
   )
 )
 
-(define (count_command list_of_shapes count)
-    (cond
-      ((null? list_of_shapes) 
-        (display "There are ")(display count)(display " shapes.")(newline)
-      'done)
-      (else
-        (count_command (cdr list_of_shapes) (+ count 1))
-      )
+(define (get_count list_of_shapes count)
+  (cond
+    ((null? list_of_shapes) 
+      count
+    )
+    (else
+      (get_count (cdr list_of_shapes) (+ count 1))
+    )
   )
+)
+
+(define (count_command list_of_shapes)
+  (define count(get_count list_of_shapes 0))
+  (display "There are ")(display count)(display " shapes.")(newline)
 )
 
 (define (get_min_area list_of_shapes min_area)
@@ -337,12 +342,24 @@
   (display "total(Volume)= ")(display total_volume)(newline)
 )
 
+(define (avg_command list_of_shapes)
+  (define total_area(get_total_area list_of_shapes 0))
+  (define total_volume(get_total_volume list_of_shapes 0))
+  (define count(get_count list_of_shapes 0))
+
+  (define avg_area(round-off (/ total_area count) 2))
+  (define avg_volume(round-off (/ total_volume count) 2))
+
+  (display "avg(Surface Area)= ")(display avg_area)(newline)
+  (display "avg(Volume)= ")(display avg_volume)(newline)
+)
+
 (define (perform . params)
     (define command(first params))
     (define file_name(second params))
     (define lines (read_file file_name))
     (define list_of_shapes(create_list_of_shapes lines '()))
-    (total_command list_of_shapes)
+    (count_command list_of_shapes)
     (define test_conditions(cdr  (cdr params)))
     (define valid_test_conditions(is_valid_test_conditions test_conditions))
     (cond
