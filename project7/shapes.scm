@@ -120,14 +120,9 @@
           (display "Unable to open ") (display file_name) (display " for reading.")(newline)
           '()
       )
-  )
-  (cond
-    ((null? (car (get_lines file_name)))
-      (cdr (get_lines file_name))
-    )
-    (else
-      (get_lines file_name)
-    )
+      (else
+          (get_lines file_name)
+      )
   )
 )
 
@@ -142,7 +137,7 @@
     (if (eof-object? stuff)
 	    lines
 	    (begin 
-	            (get_lines_helper port (cons (str-split (list->string (reverse (cdr (reverse (string->list stuff))))) #\space) lines ))
+	            (get_lines_helper port (cons (str-split (car (str-split stuff #\newline)) #\space) lines ))
       )
     )        
   )
@@ -349,7 +344,7 @@
   (define total_volume(get_total_volume list_of_shapes 0))
   (define count(get_count list_of_shapes 0))
 
-  (define avg_area(round-off (exact->inexact (/ total_area count)) 2))
+  (define avg_area(round-off (/ total_area count) 2))
   (define avg_volume(round-off (/ total_volume count) 2))
 
   (display "avg(Surface Area)= ")(display avg_area)(newline)
@@ -481,12 +476,14 @@
 )
 
 (define (perform . params)
+    (newline)
     (define command(first params))
     (define file_name(second params))
     (define lines (read_file file_name))
     (define list_of_shapes(create_list_of_shapes lines '()))
     (define test_conditions(cdr  (cdr params)))
     (define filter_list(get_filter_list list_of_shapes test_conditions))
+
     (define valid_file(is_file_valid file_name))
     (define valid_test_conditions (is_valid_test_conditions test_conditions))
     (cond
@@ -511,5 +508,4 @@
       (else 'done)
     )
     (newline)
-    
 )
