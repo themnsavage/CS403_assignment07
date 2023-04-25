@@ -3,5 +3,5 @@
 (perform "avg" "shapes.dat" 100 "<" "area" "<" 200)
 (perform "print" "shapes.dat")
 (perform "print" "shapes.dat" "type" "==" "box" "area" ">=" 88)
-(perform "count" "shapes.dat" "type" ">" "cyl")
+(perform "count" "shapes.dat" "area" ">=" 6)
 (perform "count" "shapes.dat" "type" "==" "box")

@@ -121,7 +121,7 @@
           '()
       )
       (else
-          (get_lines file_name)
+          (cdr (get_lines file_name))
       )
   )
 )
@@ -482,7 +482,6 @@
     (define list_of_shapes(create_list_of_shapes lines '()))
     (define test_conditions(cdr  (cdr params)))
     (define filter_list(get_filter_list list_of_shapes test_conditions))
-
     (define valid_file(is_file_valid file_name))
     (define valid_test_conditions (is_valid_test_conditions test_conditions))
     (cond
