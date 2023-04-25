@@ -120,9 +120,14 @@
           (display "Unable to open ") (display file_name) (display " for reading.")(newline)
           '()
       )
-      (else
-          (cdr (get_lines file_name))
-      )
+  )
+  (cond
+    ((null? (car (get_lines file_name)))
+      (cdr (get_lines file_name))
+    )
+    (else
+      (get_lines file_name)
+    )
   )
 )
 
@@ -344,7 +349,7 @@
   (define total_volume(get_total_volume list_of_shapes 0))
   (define count(get_count list_of_shapes 0))
 
-  (define avg_area(round-off (/ total_area count) 2))
+  (define avg_area(round-off (exact->inexact (/ total_area count)) 2))
   (define avg_volume(round-off (/ total_volume count) 2))
 
   (display "avg(Surface Area)= ")(display avg_area)(newline)
